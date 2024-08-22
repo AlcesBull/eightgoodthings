@@ -16,3 +16,13 @@ ul {
 li {
     padding: 5px 0;
 }
+
+a {
+    color: #ff8c00; /* Bright Orange */
+    text-decoration: none; /* Removes underline */
+}
+
+a:hover {
+    text-decoration-style: solid;
+    text-decoration: underline;
+}
