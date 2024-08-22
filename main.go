@@ -31,8 +31,16 @@ func main() {
 func updateHTMLFiles(category string, items []string) {
 	updateIndexHTML(category, items)
 	updateArchiveHTML(category, items)
-	panic("unimplemented")
+	return nil // or return an error if something goes wrong
 }
+
+err := updateHTMLFiles(category, items)
+if err != nil {
+    fmt.Println("Error updating HTML files:", err)
+    return
+}
+
+commitAndPushChanges()
 
 func updateIndexHTML(category string, items []string) {
 	content := fmt.Sprintf(`
