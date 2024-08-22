@@ -24,6 +24,7 @@ func main() {
 	}
 
 	updateHTMLFiles(category, items)
+	commitAndPushChanges()
 	fmt.Println("Things saved and sent to web!")
 }
 
