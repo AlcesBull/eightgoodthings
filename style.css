@@ -1,0 +1,18 @@
+body {
+    background-color: #333;
+    color: #fff;
+    font-family: 'Roboto Mono', monospace;
+    padding: 20px;
+}
+
+h1, h2 {
+    color: #fff;
+}
+
+ul {
+    list-style-type: none;
+}
+
+li {
+    padding: 5px 0;
+}
