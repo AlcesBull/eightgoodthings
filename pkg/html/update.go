@@ -1,39 +1,13 @@
-package main
+package html
 
 import (
-	"bufio"
 	"fmt"
 	"io/ioutil"
 	"os"
-	"os/exec"
 	"strings"
 )
 
-func main() {
-	reader := bufio.NewReader(os.Stdin)
-
-	fmt.Println("Which eight good things are you going to share about today?")
-	category, _ := reader.ReadString('\n')
-	category = strings.TrimSpace(category)
-
-	items := make([]string, 0, 8)
-	for i := 0; i < 8; i++ {
-		fmt.Printf("Enter item %d: ", i+1)
-		item, _ := reader.ReadString('\n')
-		items = append(items, strings.TrimSpace(item))
-	}
-
-	err := updateHTMLFiles(category, items)
-	if err != nil {
-		fmt.Println("Error updating HTML files:", err)
-		return
-	}
-
-	commitAndPushChanges(category)
-	fmt.Println("Things saved and sent to web!")
-}
-
-func updateHTMLFiles(category string, items []string) error {
+func UpdateHTMLFiles(category string, items []string) error {
 	if err := updateIndexHTML(category, items); err != nil {
 		return err
 	}
@@ -110,27 +84,4 @@ func updateArchiveHTML(category string, items []string) error {
 
 	// Write the entire content back to the file
 	return ioutil.WriteFile("archive.html", []byte(newContent), 0644)
-}
-
-func commitAndPushChanges(category string) {
-	cmd := exec.Command("git", "add", ".")
-	if err := cmd.Run(); err != nil {
-		fmt.Println("Error adding files:", err)
-		return
-	}
-
-	commitMessage := fmt.Sprintf("Update website with new list: %s", category)
-	cmd = exec.Command("git", "commit", "-m", commitMessage)
-	if err := cmd.Run(); err != nil {
-		fmt.Println("Error committing changes:", err)
-		return
-	}
-
-	cmd = exec.Command("git", "push")
-	if err := cmd.Run(); err != nil {
-		fmt.Println("Error pushing changes:", err)
-		return
-	}
-
-	fmt.Println("Changes pushed to GitHub Pages!")
 }
