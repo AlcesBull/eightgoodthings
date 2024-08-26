@@ -2,7 +2,6 @@ package html
 
 import (
 	"fmt"
-	"io/ioutil"
 	"os"
 	"strings"
 )
@@ -41,12 +40,12 @@ func updateIndexHTML(category string, items []string) error {
     </body>
     </html>`
 
-	return ioutil.WriteFile("index.html", []byte(content), 0644)
+	return os.WriteFile("index.html", []byte(content), 0644)
 }
 
 func updateArchiveHTML(category string, items []string) error {
 	// Read the entire file
-	content, err := ioutil.ReadFile("archive.html")
+	content, err := os.ReadFile("archive.html")
 	if err != nil && !os.IsNotExist(err) {
 		return fmt.Errorf("error reading archive.html: %w", err)
 	}
@@ -83,5 +82,5 @@ func updateArchiveHTML(category string, items []string) error {
 	newContent := string(content[:insertPos]) + newEntry + string(content[insertPos:])
 
 	// Write the entire content back to the file
-	return ioutil.WriteFile("archive.html", []byte(newContent), 0644)
+	return os.WriteFile("archive.html", []byte(newContent), 0644)
 }
